@@ -23,12 +23,12 @@
 	}
 	// Add listeners to receive newly found devices and updates
 	// to the previously known devices.
-	chrome.bluetooth.onDeviceAdded.addListener(addDeviceName);
-	chrome.bluetooth.onDeviceChanged.addListener(updateDeviceName);
-	chrome.bluetooth.onDeviceRemoved.addListener(removeDeviceName);	
+	Navigator.bluetooth.onDeviceAdded.addListener(addDeviceName);
+	Navigator.bluetooth.onDeviceChanged.addListener(updateDeviceName);
+	Navigator.bluetooth.onDeviceRemoved.addListener(removeDeviceName);	
     // Get the list of paired devices.
     //	console.log("");
-    //	chrome.bluetooth.getDevices(function(devices) {
+    //	Navigator.bluetooth.getDevices(function(devices) {
     //		for (var i = 0; i < devices.length; i++) {
     //		    console.log('Found: ' + device[i].name);
     //		    deviceArray[deviceCount++] = device[i];
@@ -37,10 +37,10 @@
     //		}
     //    });
     //======================================================================
-	chrome.bluetooth.startDiscovery(function() {
+	Navigator.bluetooth.startDiscovery(function() {
         console.log('Starting Bluetooth Device Scan.');
         setTimeout(function() {  // Stop discovery after 3 seconds
-            chrome.bluetooth.stopDiscovery(function() {});
+            Navigator.bluetooth.stopDiscovery(function() {});
             console.log('Finished Scanning for Bluetooth Devices.');
             document.querySelector('#selectedBTDevice').empty().text(btDeviceSelect.val());
         }, 30000);
@@ -98,20 +98,20 @@
 				return;
 			}
 			else if (!socketID) {
-				chrome.bluetoothSocket.create(function(createInfo) {
-				    if (chrome.runtime.lastError) {
+				Navigator.bluetoothSocket.create(function(createInfo) {
+				    if (Navigator.runtime.lastError) {
 						AddConnectedSocketId(socketID = 0);
-						console.log("Socket Create Failed: " + chrome.runtime.lastError.message);
+						console.log("Socket Create Failed: " + Navigator.runtime.lastError.message);
 					}
 					else {
 						socketID = createInfo.socketId;
-						chrome.bluetoothSocket.connect(createInfo.socketId,
+						Navigator.bluetoothSocket.connect(createInfo.socketId,
 						    btDeviceAddress, "1101", onConnectedCallback);
 					}
 				});
-				if (chrome.runtime.lastError) {
+				if (Navigator.runtime.lastError) {
 				    AddConnectedSocketId(socketID = 0);
-					console.log("Connection Operation failed: " + chrome.runtime.lastError.message);
+					console.log("Connection Operation failed: " + Navigator.runtime.lastError.message);
 				} 
 			}
 			else {
@@ -120,9 +120,9 @@
 		});
 	//======================================================================
 	var onConnectedCallback = function() {
-			if (chrome.runtime.lastError) {
+			if (Navigator.runtime.lastError) {
 					AddConnectedSocketId(socketID = 0);
-					console.log("Connection failed: " + chrome.runtime.lastError.message);
+					console.log("Connection failed: " + Navigator.runtime.lastError.message);
 			}
 			else {
 					// Profile implementation here.
@@ -138,9 +138,9 @@
 			console.log('');
 			if (socketID) {
 				console.log('Disconnecting connection id ' + socketID + '...');
-				chrome.bluetoothSocket.disconnect(socketID);
-				if (chrome.runtime.lastError) {
-				    console.log("Disconnect failed: " + chrome.runtime.lastError.message);
+				Navigator.bluetoothSocket.disconnect(socketID);
+				if (Navigator.runtime.lastError) {
+				    console.log("Disconnect failed: " + Navigator.runtime.lastError.message);
 				}
 				else {
 					console.log('Disconnect successful');
@@ -182,8 +182,8 @@
 			for (var i = 0; deviceInfo.uuids.length > i; ++i) {
 				console.log(" uuid:" + deviceInfo.uuids[i]);
 			}
-			if (chrome.runtime.lastError) {
-				console.log("getDevice Operation failed: " + chrome.runtime.lastError.message);
+			if (Navigator.runtime.lastError) {
+				console.log("getDevice Operation failed: " + Navigator.runtime.lastError.message);
 			} 
 		});
     //======================================================================
@@ -195,9 +195,9 @@
 				var txstring = txdata + '\r';
 				var txbuffer = convertStringToArrayBuffer(txstring);
 
-				chrome.bluetoothSocket.send(socketID, txbuffer, function (bytes_sent) {
-				    if (chrome.runtime.lastError) {
-					    console.log("send Operation failed: " + chrome.runtime.lastError.message);
+				Navigator.bluetoothSocket.send(socketID, txbuffer, function (bytes_sent) {
+				    if (Navigator.runtime.lastError) {
+					    console.log("send Operation failed: " + Navigator.runtime.lastError.message);
 				    } 
 					else {
 						console.log('Sent ' + bytes_sent + ' bytes');
@@ -228,5 +228,5 @@
 		console.log(errorInfo.errorMessage);
 	}
     //======================================================================
-	chrome.bluetoothSocket.onReceive.addListener(onBTReceive);
-	chrome.bluetoothSocket.onReceiveError.addListener(onBTReceiveError);
+	Navigator.bluetoothSocket.onReceive.addListener(onBTReceive);
+	Navigator.bluetoothSocket.onReceiveError.addListener(onBTReceiveError);
