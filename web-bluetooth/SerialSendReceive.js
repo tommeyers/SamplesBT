@@ -23,12 +23,12 @@
 	}
 	// Add listeners to receive newly found devices and updates
 	// to the previously known devices.
-	Navigator.bluetooth.onDeviceAdded.addListener(addDeviceName);
-	Navigator.bluetooth.onDeviceChanged.addListener(updateDeviceName);
-	Navigator.bluetooth.onDeviceRemoved.addListener(removeDeviceName);	
+	// no onDeviceAdded ???  navigator.bluetooth.onDeviceAdded.addListener(addDeviceName);
+	navigator.bluetooth.onDeviceChanged.addListener(updateDeviceName);
+	navigator.bluetooth.onDeviceRemoved.addListener(removeDeviceName);	
     // Get the list of paired devices.
     //	console.log("");
-    //	Navigator.bluetooth.getDevices(function(devices) {
+    //	navigator.bluetooth.getDevices(function(devices) {
     //		for (var i = 0; i < devices.length; i++) {
     //		    console.log('Found: ' + device[i].name);
     //		    deviceArray[deviceCount++] = device[i];
@@ -37,10 +37,10 @@
     //		}
     //    });
     //======================================================================
-	Navigator.bluetooth.startDiscovery(function() {
+	navigator.bluetooth.startDiscovery(function() {
         console.log('Starting Bluetooth Device Scan.');
         setTimeout(function() {  // Stop discovery after 3 seconds
-            Navigator.bluetooth.stopDiscovery(function() {});
+            navigator.bluetooth.stopDiscovery(function() {});
             console.log('Finished Scanning for Bluetooth Devices.');
             document.querySelector('#selectedBTDevice').empty().text(btDeviceSelect.val());
         }, 30000);
@@ -98,20 +98,20 @@
 				return;
 			}
 			else if (!socketID) {
-				Navigator.bluetoothSocket.create(function(createInfo) {
-				    if (Navigator.runtime.lastError) {
+				navigator.bluetoothSocket.create(function(createInfo) {
+				    if (navigator.runtime.lastError) {
 						AddConnectedSocketId(socketID = 0);
-						console.log("Socket Create Failed: " + Navigator.runtime.lastError.message);
+						console.log("Socket Create Failed: " + navigator.runtime.lastError.message);
 					}
 					else {
 						socketID = createInfo.socketId;
-						Navigator.bluetoothSocket.connect(createInfo.socketId,
+						navigator.bluetoothSocket.connect(createInfo.socketId,
 						    btDeviceAddress, "1101", onConnectedCallback);
 					}
 				});
-				if (Navigator.runtime.lastError) {
+				if (navigator.runtime.lastError) {
 				    AddConnectedSocketId(socketID = 0);
-					console.log("Connection Operation failed: " + Navigator.runtime.lastError.message);
+					console.log("Connection Operation failed: " + navigator.runtime.lastError.message);
 				} 
 			}
 			else {
@@ -120,9 +120,9 @@
 		});
 	//======================================================================
 	var onConnectedCallback = function() {
-			if (Navigator.runtime.lastError) {
+			if (navigator.runtime.lastError) {
 					AddConnectedSocketId(socketID = 0);
-					console.log("Connection failed: " + Navigator.runtime.lastError.message);
+					console.log("Connection failed: " + navigator.runtime.lastError.message);
 			}
 			else {
 					// Profile implementation here.
@@ -138,9 +138,9 @@
 			console.log('');
 			if (socketID) {
 				console.log('Disconnecting connection id ' + socketID + '...');
-				Navigator.bluetoothSocket.disconnect(socketID);
-				if (Navigator.runtime.lastError) {
-				    console.log("Disconnect failed: " + Navigator.runtime.lastError.message);
+				navigator.bluetoothSocket.disconnect(socketID);
+				if (navigator.runtime.lastError) {
+				    console.log("Disconnect failed: " + navigator.runtime.lastError.message);
 				}
 				else {
 					console.log('Disconnect successful');
@@ -182,8 +182,8 @@
 			for (var i = 0; deviceInfo.uuids.length > i; ++i) {
 				console.log(" uuid:" + deviceInfo.uuids[i]);
 			}
-			if (Navigator.runtime.lastError) {
-				console.log("getDevice Operation failed: " + Navigator.runtime.lastError.message);
+			if (navigator.runtime.lastError) {
+				console.log("getDevice Operation failed: " + navigator.runtime.lastError.message);
 			} 
 		});
     //======================================================================
@@ -195,9 +195,9 @@
 				var txstring = txdata + '\r';
 				var txbuffer = convertStringToArrayBuffer(txstring);
 
-				Navigator.bluetoothSocket.send(socketID, txbuffer, function (bytes_sent) {
-				    if (Navigator.runtime.lastError) {
-					    console.log("send Operation failed: " + Navigator.runtime.lastError.message);
+				navigator.bluetoothSocket.send(socketID, txbuffer, function (bytes_sent) {
+				    if (navigator.runtime.lastError) {
+					    console.log("send Operation failed: " + navigator.runtime.lastError.message);
 				    } 
 					else {
 						console.log('Sent ' + bytes_sent + ' bytes');
@@ -228,5 +228,5 @@
 		console.log(errorInfo.errorMessage);
 	}
     //======================================================================
-	Navigator.bluetoothSocket.onReceive.addListener(onBTReceive);
-	Navigator.bluetoothSocket.onReceiveError.addListener(onBTReceiveError);
+	navigator.bluetoothSocket.onReceive.addListener(onBTReceive);
+	navigator.bluetoothSocket.onReceiveError.addListener(onBTReceiveError);
