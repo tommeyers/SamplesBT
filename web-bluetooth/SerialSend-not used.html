@@ -1,0 +1,9 @@
+﻿<p>This code illustrates serial Send</p>
+<button>Send to Serial</button>
+<script>
+  document.querySelector('button').addEventListener('click', function() {
+    if (navigator.bluetooth) {
+      onButtonClick();
+    }
+  });
+</script>

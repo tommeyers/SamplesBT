@@ -8,6 +8,7 @@
 	var deviceOffset     = 0;
 	var screenWidth = screen.availWidth;
 	var screenHeight = screen.availHeight;
+	console.log('here1');
 	var addDeviceName = function(device) {
 		deviceArray[deviceCount++] = device;
     //  var btDeviceName = device.name;
