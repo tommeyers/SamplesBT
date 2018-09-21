@@ -24,18 +24,18 @@
 	// Add listeners to receive newly found devices and updates
 	// to the previously known devices.
 	// no onDeviceAdded ???  navigator.bluetooth.onDeviceAdded.addListener(addDeviceName);
-	navigator.bluetooth.onDeviceChanged.addListener(updateDeviceName);
-	navigator.bluetooth.onDeviceRemoved.addListener(removeDeviceName);	
+	// no onDeviceAdded ???  navigator.bluetooth.onDeviceChanged.addListener(updateDeviceName);
+	// no onDeviceAdded ???  navigator.bluetooth.onDeviceRemoved.addListener(removeDeviceName);	
     // Get the list of paired devices.
     //	console.log("");
-    //	navigator.bluetooth.getDevices(function(devices) {
-    //		for (var i = 0; i < devices.length; i++) {
-    //		    console.log('Found: ' + device[i].name);
+    	navigator.bluetooth.getDevices(function(devices) {
+    		for (var i = 0; i < devices.length; i++) {
+    		    console.log('Found: ' + device[i].name);
     //		    deviceArray[deviceCount++] = device[i];
     //			document.querySelector('<option></option>').text(device[i].name).appendTo(btDeviceSelect);
     //		    updateDeviceName(devices[i]);
-    //		}
-    //    });
+    		}
+        });
     //======================================================================
 	navigator.bluetooth.startDiscovery(function() {
         console.log('Starting Bluetooth Device Scan.');
