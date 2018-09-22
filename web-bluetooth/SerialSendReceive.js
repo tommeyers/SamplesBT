@@ -1,4 +1,18 @@
-﻿console.log('here1');
+﻿
+function myGesture() {
+    console.log("got form submit");
+    console.log(navigator.bluetooth);
+    event.stopPropagation();
+    event.preventDefault();
+    if (C) {
+      console.log('we have bluetooth');
+    } else {
+        console.log("we don't have bluetooth");
+    }
+    startUp();
+};
+
+console.log('here1');
 var btDeviceSelect   = document.querySelector('#btDeviceSelect');
 var socketID         = 0;
 var deviceArray      = {};
