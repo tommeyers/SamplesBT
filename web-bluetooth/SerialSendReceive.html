@@ -20,10 +20,11 @@
   document.querySelector('form').addEventListener('submit', function(event) {
     event.stopPropagation();
     event.preventDefault();
-
-    if (isWebBluetoothEnabled()) {
-      ChromeSamples.clearLog();
-      onButtonClick();
+    if (navigator.bluetooth) {
+      console.log("we don't have bluetooth");
+    } else {
+        console.log("we have bluetooth");
+        onButtonClick();
     }
   });
 </script>
