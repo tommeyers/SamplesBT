@@ -21,10 +21,10 @@
     event.stopPropagation();
     event.preventDefault();
     if (navigator.bluetooth) {
-      console.log("we don't have bluetooth");
+      console.log("we have bluetooth");
+      document.querySelector('form').click;
     } else {
-        console.log("we have bluetooth");
-        onButtonClick();
+        console.log("we don't have bluetooth");
     }
   });
 </script>
