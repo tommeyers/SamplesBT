@@ -22,9 +22,9 @@ var updateDeviceName = function(device) {
 var removeDeviceName = function(device) {
 	delete device_names[device.address];
 }
-function startUp() {
-	//======================================================================
-	console.log('here3');
+
+document.querySelector('form').addEventListener('submit', function(event) {
+    console.log("submit");
 	navigator.bluetooth.startDiscovery(function() {
 	        console.log('Starting Bluetooth Device discovery.');
 	        setTimeout(function() {  
@@ -32,11 +32,21 @@ function startUp() {
 	            console.log('Finished Scanning for Bluetooth Devices.');
 	        }, 30000);
 	});
-	navigator.bluetooth.startDiscovery(
+	navigator.bluetooth.stopDiscovery(
 	         function() {
 	         console.log('Stopping Bluetooth Device discovery.');
 			 }
-	);         
+	);       
+	navigator.bluetooth.requestDevice({
+	  acceptAllDevices: true
+	})
+	.then(device => { /* ... */ })
+	.catch(error => { console.log(error); });
+});
+function startUp() {
+	//======================================================================
+	console.log('here3');
+	  
 	navigator.bluetooth.getDevices("all",function(devices) {
 	            console.log('Starting Bluetooth Device get.');
 	    		for (var i = 0; i < devices.length; i++) {
@@ -54,6 +64,7 @@ function startUp() {
 	navigator.bluetoothSocket.onReceiveError.addListener(onBTReceiveError);
 	
 };	
+/*
 document.querySelector('#btConnect').click(function () {
 		var btDeviceName    = document.querySelector('#btDeviceSelect').val();
 		    deviceOffset    = document.querySelector("#btDeviceSelect")[0].selectedIndex;
@@ -85,6 +96,7 @@ document.querySelector('#btConnect').click(function () {
 			console.log('Already connected.');
 		}
 });
+*/
 console.log('here7');
 
 //======================================================================
