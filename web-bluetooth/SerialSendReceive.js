@@ -1,5 +1,118 @@
-﻿
-	var btDeviceSelect = document.querySelector('#btDeviceSelect');
+﻿console.log('here1');
+var btDeviceSelect   = document.querySelector('#btDeviceSelect');
+var socketID         = 0;
+var deviceArray      = {};
+var device_names     = {};
+var device_Addresses = {};
+var deviceCount      = 0;
+var deviceOffset     = 0;
+var screenWidth = screen.availWidth;
+var screenHeight = screen.availHeight;
+console.log('here2');
+var rxbuilder = '';
+var addDeviceName = function(device) {
+	deviceArray[deviceCount++] = device;
+//  var btDeviceName = device.name;
+//  document.querySelector('<option></option>').text(btDeviceName).appendTo(btDeviceSelect);
+    document.querySelector('<option></option>').text(device.name).appendTo(btDeviceSelect);
+}
+var updateDeviceName = function(device) {
+	console.log('  Have a device update - ' + device.name);
+}
+var removeDeviceName = function(device) {
+	delete device_names[device.address];
+}
+//======================================================================
+console.log('here3');
+
+navigator.bluetooth.getDevices(function(devices) {
+    		for (var i = 0; i < devices.length; i++) {
+    		    console.log('Found: ' + device[i].name);
+    //		    deviceArray[deviceCount++] = device[i];
+    //			document.querySelector('<option></option>').text(device[i].name).appendTo(btDeviceSelect);
+    //		    updateDeviceName(devices[i]);
+    		}
+});    		
+console.log('here4');
+
+navigator.bluetooth.startDiscovery(function() {
+        console.log('Starting Bluetooth Device Scan.');
+        setTimeout(function() {  
+            navigator.bluetooth.stopDiscovery(function() {});
+            console.log('Finished Scanning for Bluetooth Devices.');
+            document.querySelector('#selectedBTDevice').empty().text(btDeviceSelect.val());
+        }, 30000);
+});	
+console.log('here5');
+    
+navigator.bluetoothSocket.onReceive.addListener(onBTReceive);
+navigator.bluetoothSocket.onReceiveError.addListener(onBTReceiveError);
+document.querySelector('#btConnect').click(function () {
+		var btDeviceName    = document.querySelector('#btDeviceSelect').val();
+		    deviceOffset    = document.querySelector("#btDeviceSelect")[0].selectedIndex;
+		var btDeviceAddress = deviceArray[deviceOffset].address;
+		console.log('');
+		console.log('Starting Connection to ' + btDeviceName);
+		if (!btDeviceName) {
+			console.log('No Bluetooth Device Selected.');
+			return;
+		}
+		else if (!socketID) {
+			navigator.bluetoothSocket.create(function(createInfo) {
+			    if (navigator.runtime.lastError) {
+					AddConnectedSocketId(socketID = 0);
+					console.log("Socket Create Failed: " + navigator.runtime.lastError.message);
+				}
+				else {
+					socketID = createInfo.socketId;
+					navigator.bluetoothSocket.connect(createInfo.socketId,
+					    btDeviceAddress, "1101", onConnectedCallback);
+				}
+			});
+			if (navigator.runtime.lastError) {
+			    AddConnectedSocketId(socketID = 0);
+				console.log("Connection Operation failed: " + navigator.runtime.lastError.message);
+			} 
+		}
+		else {
+			console.log('Already connected.');
+		}
+});
+console.log('here7');
+
+//======================================================================
+var onConnectedCallback = function() {
+		if (navigator.runtime.lastError) {
+				AddConnectedSocketId(socketID = 0);
+				console.log("Connection failed: " + navigator.runtime.lastError.message);
+		}
+		else {
+				// Profile implementation here.
+				console.log("Connected with socketID = " + socketID);
+				AddConnectedSocketId(socketID);
+				document.querySelector('#socketId').text(socketID);
+				document.querySelector('#btStatus').text("Connected");
+		}
+}
+function onBTReceive(info) {
+	console.log('Received ' + info.data.byteLength + ' bytes of data: ' + convertArrayBufferToDumpString(info.data));
+	var rxstring = convertArrayBufferToString(info.data);
+	rxbuilder += rxstring;
+	if (rxbuilder.charCodeAt(rxbuilder.length - 1) == 13) {
+		var rxdata = rxbuilder.slice(0, -1);
+		console.log('<< Received message: "' + rxdata + '"');
+		rxbuilder = '';
+	}
+	else {
+		console.log('Message is not terminated. Message so far is: "' + rxbuilder + '"');
+	}
+}
+//======================================================================
+function onBTReceiveError(errorInfo) {
+	console.log(errorInfo.errorMessage);
+}
+    
+/********************************************************************
 	var socketID         = 0;
 	var deviceArray      = {};
 	var device_names     = {};
@@ -230,3 +343,4 @@
     //======================================================================
 	navigator.bluetoothSocket.onReceive.addListener(onBTReceive);
 	navigator.bluetoothSocket.onReceiveError.addListener(onBTReceiveError);
+*/
