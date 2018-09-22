@@ -6,79 +6,29 @@
 <body>
 
 
-<form>
+<form id="form">
   <label for="allDevices">All Devices</label>
   <input id="allDevices" type="checkbox">
   <input id="service" type="text" size=17 list="services" placeholder="Bluetooth Service">
   <input id="name" type="text" size=17 placeholder="Device Name">
   <input id="namePrefix" type="text" size=17 placeholder="Device Name Prefix">
-  <button>Get Bluetooth Device Info</button>
+  <button type="submit">Get Bluetooth Device Info</button>
 </form>
 
 
 <script>
   document.querySelector('form').addEventListener('submit', function(event) {
+    console.log("got form submit");
+    
     event.stopPropagation();
     event.preventDefault();
     if (navigator.bluetooth) {
       console.log("we have bluetooth");
-      document.querySelector('form').click;
     } else {
         console.log("we don't have bluetooth");
     }
   });
 </script>
-
-
-
-      <div>
-        <div>
-          <label for="btDeviceSelect">BT Devices:</label>
-          <select class="form-control" id="btDeviceSelect"></select>
-        </div>
-
-        <div>
-          <button type="button" class="btn" id="btDeviceScan">Scan Devices</button>
-        </div>  
-        <div>
-          <label>Selected BT Device:</label>
-          <p><span id="selectedBTDevice">&nbsp;</span></p>
-        </div>
-        <div>
-          <div>
-            <label>Connection Status:</label>
-            <div><span id="btStatus">Disconnected</span></div>
-          </div>
-
-          <div>
-            <label>Socket Id:</label>
-            <div><span id="socketId">-</span></div>
-          </div>
-        </div>
-        <div>
-          <label>Actions:</label>
-          <div>
-            <button type="button" class="btn" id="btConnect">Connect</button>
-            <button type="button" class="btn" id="btDisconnect">Disconnect</button>
-            <button type="button" class="btn" id="btGetDevice">Device Info</button>
-          </div>
-        </div>
-        <div>
-          <label for="sendMessageContent">Send Message:</label>
-          <div>
-            <input type="text" class="form-control" id="sendMessageContent">
-            <span class="input-group-btn">
-              <button class="btn" type="button" id="btSendMessage">Send</button>
-            </span>
-          </div>
-        </div>
-        <div>
-          <label>Communication Log:</label>
-          <div style=" overflow: scroll; height: 375px;  margin: 0; font-family: 'Courier New', Courier, monospace;" id="btLog">
-            <pre class="log-content" id="btLogContent"></pre>
-          </div>
-        </div> 
-      </div>
 
 </body>
 <script type="text/javascript" onload="" src="SerialSendReceive.js"></script>

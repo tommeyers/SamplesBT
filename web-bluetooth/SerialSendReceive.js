@@ -24,25 +24,31 @@ var removeDeviceName = function(device) {
 }
 //======================================================================
 console.log('here3');
-
-navigator.bluetooth.getDevices(function(devices) {
+navigator.bluetooth.startDiscovery(function() {
+        console.log('Starting Bluetooth Device discovery.');
+        setTimeout(function() {  
+            navigator.bluetooth.stopDiscovery(function() {});
+            console.log('Finished Scanning for Bluetooth Devices.');
+        }, 30000);
+});
+navigator.bluetooth.startDiscovery(
+         function() {
+         console.log('Stopping Bluetooth Device discovery.');
+		 }
+);         
+navigator.bluetooth.getDevices("all",function(devices) {
+            console.log('Starting Bluetooth Device get.');
     		for (var i = 0; i < devices.length; i++) {
     		    console.log('Found: ' + device[i].name);
     //		    deviceArray[deviceCount++] = device[i];
     //			document.querySelector('<option></option>').text(device[i].name).appendTo(btDeviceSelect);
     //		    updateDeviceName(devices[i]);
     		}
-});    		
+});
+    		
 console.log('here4');
 
-navigator.bluetooth.startDiscovery(function() {
-        console.log('Starting Bluetooth Device Scan.');
-        setTimeout(function() {  
-            navigator.bluetooth.stopDiscovery(function() {});
-            console.log('Finished Scanning for Bluetooth Devices.');
-            document.querySelector('#selectedBTDevice').empty().text(btDeviceSelect.val());
-        }, 30000);
-});	
+	
 console.log('here5');
     
 navigator.bluetoothSocket.onReceive.addListener(onBTReceive);
