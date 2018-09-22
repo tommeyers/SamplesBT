@@ -13,6 +13,7 @@ function myGesture() {
 };
 
 console.log('here1');
+var devices          = {};
 var btDeviceSelect   = document.querySelector('#btDeviceSelect');
 var socketID         = 0;
 var deviceArray      = {};
@@ -61,7 +62,8 @@ function startUp() {
 	//======================================================================
 	console.log('here3');
 	  
-	navigator.bluetooth.getDevices("all",function(devices) {
+	navigator.bluetooth.getDevices("all"
+	     ,function(devices) {
 	            console.log('Starting Bluetooth Device get.');
 	    		for (var i = 0; i < devices.length; i++) {
 	    		    console.log('Found: ' + device[i].name);
@@ -69,7 +71,8 @@ function startUp() {
 	    //			document.querySelector('<option></option>').text(device[i].name).appendTo(btDeviceSelect);
 	    //		    updateDeviceName(devices[i]);
 	    		}
-	});
+	      }
+	);
 	    		
 	console.log('here4');
 	console.log('here5');
@@ -160,7 +163,7 @@ function onBTReceiveError(errorInfo) {
     //  var btDeviceName = device.name;
     //  document.querySelector('<option></option>').text(btDeviceName).appendTo(btDeviceSelect);
         document.querySelector('<option></option>').text(device.name).appendTo(btDeviceSelect);
-	}
+	}devices
 	var updateDeviceName = function(device) {
 		console.log('  Have a device update - ' + device.name);
 	}
