@@ -4,7 +4,7 @@ function myGesture() {
     console.log(navigator.bluetooth);
     event.stopPropagation();
     event.preventDefault();
-    if (C) {
+    if (navigator.bluetooth) {
       console.log('we have bluetooth');
     } else {
         console.log("we don't have bluetooth");
