@@ -42,10 +42,10 @@ document.querySelector('form').addEventListener('submit', function(event) {
     console.log("submit");
 	navigator.bluetooth.startDiscovery(function() {
 	        console.log('Starting Bluetooth Device discovery.');
-	        setTimeout(function() {  
-	            navigator.bluetooth.stopDiscovery(function() {});
-	            console.log('Finished Scanning for Bluetooth Devices.');
-	        }, 30000);
+	       // setTimeout(function() {  
+	       //     navigator.bluetooth.stopDiscovery(function() {});
+	       //     console.log('Finished Scanning for Bluetooth Devices.');
+	       // }, 30000);
 	});
 	navigator.bluetooth.stopDiscovery(
 	         function() {
