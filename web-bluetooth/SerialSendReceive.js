@@ -22,37 +22,38 @@ var updateDeviceName = function(device) {
 var removeDeviceName = function(device) {
 	delete device_names[device.address];
 }
-//======================================================================
-console.log('here3');
-navigator.bluetooth.startDiscovery(function() {
-        console.log('Starting Bluetooth Device discovery.');
-        setTimeout(function() {  
-            navigator.bluetooth.stopDiscovery(function() {});
-            console.log('Finished Scanning for Bluetooth Devices.');
-        }, 30000);
-});
-navigator.bluetooth.startDiscovery(
-         function() {
-         console.log('Stopping Bluetooth Device discovery.');
-		 }
-);         
-navigator.bluetooth.getDevices("all",function(devices) {
-            console.log('Starting Bluetooth Device get.');
-    		for (var i = 0; i < devices.length; i++) {
-    		    console.log('Found: ' + device[i].name);
-    //		    deviceArray[deviceCount++] = device[i];
-    //			document.querySelector('<option></option>').text(device[i].name).appendTo(btDeviceSelect);
-    //		    updateDeviceName(devices[i]);
-    		}
-});
-    		
-console.log('here4');
-
+function startUp() {
+	//======================================================================
+	console.log('here3');
+	navigator.bluetooth.startDiscovery(function() {
+	        console.log('Starting Bluetooth Device discovery.');
+	        setTimeout(function() {  
+	            navigator.bluetooth.stopDiscovery(function() {});
+	            console.log('Finished Scanning for Bluetooth Devices.');
+	        }, 30000);
+	});
+	navigator.bluetooth.startDiscovery(
+	         function() {
+	         console.log('Stopping Bluetooth Device discovery.');
+			 }
+	);         
+	navigator.bluetooth.getDevices("all",function(devices) {
+	            console.log('Starting Bluetooth Device get.');
+	    		for (var i = 0; i < devices.length; i++) {
+	    		    console.log('Found: ' + device[i].name);
+	    //		    deviceArray[deviceCount++] = device[i];
+	    //			document.querySelector('<option></option>').text(device[i].name).appendTo(btDeviceSelect);
+	    //		    updateDeviceName(devices[i]);
+	    		}
+	});
+	    		
+	console.log('here4');
+	console.log('here5');
+	    
+	navigator.bluetoothSocket.onReceive.addListener(onBTReceive);
+	navigator.bluetoothSocket.onReceiveError.addListener(onBTReceiveError);
 	
-console.log('here5');
-    
-navigator.bluetoothSocket.onReceive.addListener(onBTReceive);
-navigator.bluetoothSocket.onReceiveError.addListener(onBTReceiveError);
+};	
 document.querySelector('#btConnect').click(function () {
 		var btDeviceName    = document.querySelector('#btDeviceSelect').val();
 		    deviceOffset    = document.querySelector("#btDeviceSelect")[0].selectedIndex;
