@@ -13,7 +13,7 @@ function myGesture() {
 };
 
 console.log('here1');
-var devices          = {};
+
 var btDeviceSelect   = document.querySelector('#btDeviceSelect');
 var socketID         = 0;
 var deviceArray      = {};
@@ -40,6 +40,7 @@ var removeDeviceName = function(device) {
 
 document.querySelector('form').addEventListener('submit', function(event) {
     console.log("submit");
+    
 	navigator.bluetooth.startDiscovery(function() {
 	        console.log('Starting Bluetooth Device discovery.');
 	       // setTimeout(function() {  
@@ -61,12 +62,13 @@ document.querySelector('form').addEventListener('submit', function(event) {
 function startUp() {
 	//======================================================================
 	console.log('here3');
-	  
-	navigator.bluetooth.getDevices("all"
-	     ,function(devices) {
+	let options = {};
+    options.acceptAllDevices = true;
+    
+	navigator.bluetooth.getDevices(options, function(x)  {
 	            console.log('Starting Bluetooth Device get.');
-	    		for (var i = 0; i < devices.length; i++) {
-	    		    console.log('Found: ' + device[i].name);
+	    		for (var i = 0; i < x.length; i++) {
+	    		    console.log('Found: ' + x[i].name);
 	    //		    deviceArray[deviceCount++] = device[i];
 	    //			document.querySelector('<option></option>').text(device[i].name).appendTo(btDeviceSelect);
 	    //		    updateDeviceName(devices[i]);
